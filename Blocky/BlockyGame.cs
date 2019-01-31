@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace Blocky
 {
@@ -15,11 +16,9 @@ namespace Blocky
 
         GraphicsDeviceManager graphics;
 
-        Texture2D bottomTexture;
-        Rectangle bottomRectangle;
-
         private EntityManager entityManager;
         private SpriteManager spriteManager;
+        private InputManager inputManager;
 
         public BlockyGame()
         {
@@ -40,6 +39,7 @@ namespace Blocky
 
             entityManager = new EntityManager(this);
             spriteManager = new SpriteManager(this, entityManager);
+            inputManager = new InputManager();
 
             base.Initialize();
         }
@@ -54,6 +54,8 @@ namespace Blocky
 
             entityManager.Load("playerTexture", new Vector2(Width / 2, Height / 2), new Player());
             entityManager.Load("bottomTexture", new Vector2(0, Height - 100), new Structure(new Vector2(Width, Height)));
+
+            inputManager.AddEntity(entityManager.Entities.FirstOrDefault(x => x is Player));
         }
 
         /// <summary>
@@ -75,7 +77,7 @@ namespace Blocky
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            inputManager.Update(gameTime);
 
             base.Update(gameTime);
         }

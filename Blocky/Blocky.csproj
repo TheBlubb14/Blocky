@@ -42,6 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BlockyGame.cs" />
+    <Compile Include="Model\Effect\Effect.cs" />
+    <Compile Include="Model\Effect\Gravity.cs" />
+    <Compile Include="Model\InputManager.cs" />
     <Compile Include="Model\SpriteManager.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\EntityManager.cs" />
