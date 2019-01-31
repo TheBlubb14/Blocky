@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Blocky.Model;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,12 +8,20 @@ namespace Blocky
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class BlockyGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public int Width => graphics.GraphicsDevice.Viewport.Width;
+        public int Height => graphics.GraphicsDevice.Viewport.Height;
 
-        public Game1()
+        GraphicsDeviceManager graphics;
+
+        Texture2D bottomTexture;
+        Rectangle bottomRectangle;
+
+        private EntityManager entityManager;
+        private SpriteManager spriteManager;
+
+        public BlockyGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -27,6 +36,10 @@ namespace Blocky
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            this.Window.AllowUserResizing = true;
+
+            entityManager = new EntityManager(this);
+            spriteManager = new SpriteManager(this, entityManager);
 
             base.Initialize();
         }
@@ -37,10 +50,10 @@ namespace Blocky
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteManager.Load();
 
-            // TODO: use this.Content to load your game content here
+            entityManager.Load("playerTexture", new Vector2(Width / 2, Height / 2), new Player());
+            entityManager.Load("bottomTexture", new Vector2(0, Height - 100), new Structure(new Vector2(Width, Height)));
         }
 
         /// <summary>
@@ -75,7 +88,7 @@ namespace Blocky
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteManager.Draw(gameTime);
 
             base.Draw(gameTime);
         }
