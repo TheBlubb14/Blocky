@@ -24,6 +24,7 @@ namespace Blocky.Model
 
             entity.Texture = blockyGame.Content.Load<Texture2D>(texture);
             entity.Position = position;
+            entity.InitialSpawn = position;
             Entities.Add(entity);
         }
 

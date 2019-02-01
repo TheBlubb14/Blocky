@@ -35,8 +35,6 @@ namespace Blocky
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.Window.AllowUserResizing = true;
-
             entityManager = new EntityManager(this);
             spriteManager = new SpriteManager(this, entityManager);
             inputManager = new InputManager();

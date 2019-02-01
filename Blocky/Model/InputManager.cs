@@ -61,6 +61,9 @@ namespace Blocky.Model
                 if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
                     entity.MooveDown();
 
+                if (state.IsKeyDown(Keys.Space))
+                    entity.Center();
+
                 entity.Update();
             }
         }
